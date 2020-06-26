@@ -1,0 +1,47 @@
+{% extends 'home.html' %}
+{% block title %}- covid19_deaths{% endblock %}
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid-19</title>
+</head>
+
+{% block content %}
+<body>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <div id="container" style="margin-top: 20px;"></div>
+
+    <script>
+<body>
+
+  <div id="container"></div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+  <script>
+    Highcharts.chart('container', {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: 'Covid'
+            },
+            xAxis: {
+                categories: {{ categories|safe }}  /* safe 필터 */
+            },
+            series: [{
+                name: 'Canada',
+                data: {{ canada_d }},
+            }, {
+                name: 'China',
+                data: {{ china_d }},
+            }]
+        });
+  </script>
+    </script>
+</body>
+{% endblock %}

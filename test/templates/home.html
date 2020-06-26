@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <title>Django Highcharts Example</title>
+</head>
+<body>
+<header class="header clearfix">
+<div class="container">
+
+
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">HighCharts</a>
+
+     <!-- Toggle Button -->
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+            <ul class="navbar-nav">
+
+    {% if user.is_authenticated %}
+
+            <li class="nav-item"><a href="{% url 'world_population' %}" class="nav-link">World_Population</a></li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown03"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ticket</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+            <a class="dropdown-item" href="{% url 'ticket_class_view_1' %}">Ticket Class #1</a>
+            <a class="dropdown-item" href="{% url 'ticket_class_view_2' %}">Ticket Class #2</a>
+            <a class="dropdown-item" href="{% url 'ticket_class_view_3' %}">Ticket Class #3</a>
+            <a class="dropdown-item" href="{% url 'json_example' %}">json_example</a>
+            </div>
+            </li>
+
+            <li class="nav-item"><a href="{% url 'covid19_deaths' %}" class="nav-link">Covid_19</a> </li>
+                &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">
+                Hi, {{ user.get_username }} !&nbsp; LOGOUT</a> </li>
+    {% else %}
+        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">LOGIN</a> </li>
+        <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">SIGNUP</a> </li>
+            </ul>
+    {% endif %}
+        </div>
+        </nav>
+</div>
+</header>
+
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

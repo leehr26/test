@@ -1,0 +1,51 @@
+{% extends 'home.html' %}
+{% block title %}- ticket_class_1{% endblock %}
+
+
+<head>
+  <meta charset="utf-8">
+  <title>Django Highcharts Example</title>
+</head>
+
+{% block content %}
+<body>
+
+  <div id="container"></div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+  <script>
+    Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Titanic Survivors by Ticket Class'
+        },
+        xAxis: {
+          type:'datetime',
+            categories: [
+              {% for entry in dataset %}
+                '{{ entry.ticket_class }} Class'{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ]
+        },
+        series: [{
+            name: 'Survived',
+            data: [
+              {% for entry in dataset %}
+                {{ entry.survived_count }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+            color: 'green'
+        }, {
+            name: 'Not survived',
+            data: [
+              {% for entry in dataset %}
+                {{ entry.not_survived_count }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+            color: 'red'
+        }]
+    });
+  </script>
+</body>
+{% endblock %}

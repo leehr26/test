@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+{% block title %}- ticekt_class_3{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <title>Django Highcharts Example</title>
+</head>
+{% block content %}
+<body>
+
+    <div id="container"></div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+        Highcharts.chart('container', {{ chart|safe }});
+    </script>
+</body>
+{% endblock %}
