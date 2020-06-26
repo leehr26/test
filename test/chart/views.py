@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from pandas.tests.extension import arrow
+
 from .models import Passenger,Covid
 from django.db.models import Count, Q
-import json
+import datetime, json
 from django.http import JsonResponse
 
 
@@ -176,34 +178,42 @@ def titanic_dual_axes(request):
 
 
 def covid19_deaths(request):
+
     # populations = {'United Kingdom': 67886011, 'China': 1439323776, 'Canada': 37742154,
     #                'Korea, South': 51269185, 'Brazil': 212559417, 'US': 331002651}
 
+    datetime.strptime(Covid.date, '%Y-%m-%d %H:%M:%S.%f')
+
+    dd = Covid.date
+    d = datetime.datetime.strptime(dd)
+
+    date = (d.year, d.month, d.day).timestamp * 1000
 
     dataset = Covid.objects \
-        .values('date') \
+        .values(date) \
         .annotate(
             canada=Count('deaths', filter=Q(country='Canada')),
             china=Count('deaths', filter=Q(country='China'))) \
-        .order_by('date')
+        .order_by(date)
 
     categories = list()
     canada_d = list()
     china_d = list()
 
+    categories.append(date)
     for entry in dataset:
-        categories.append(entry['date'])
+        # categories.append(entry['date'])
         canada_d.append(entry['canada']/37742154*100000)
         china_d.append(entry['china']/1439323776*100000)
 
-    # json_data = json.dumps(entry['date'])
-    #
-    # def json_default(value):
-    #     if isinstance(value, entry['date']):
-    #         return value.strftime('%Y-%m-%d')
-    #     raise TypeError('not JSON serializable')
-    # entry['date'] = {entry['date']: datetime.date}
-    # json_data = json.dumps(categories, default=json_default)
+
+
+    def json_default(value):
+        if isinstance(value, date):
+            return value.strftime('%Y-%m-%d')
+        raise TypeError('not JSON serializable')
+    date = {date: datetime.date}
+    json_data = json.dumps(categories, default=json_default)
 
 
     return render(request, 'covid19_deaths.html', {

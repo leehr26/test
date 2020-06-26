@@ -24,9 +24,6 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
             <ul class="navbar-nav">
-
-    {% if user.is_authenticated %}
-
             <li class="nav-item"><a href="{% url 'world_population' %}" class="nav-link">World_Population</a></li>
 
             <li class="nav-item dropdown">
@@ -42,13 +39,15 @@
 
             <li class="nav-item"><a href="{% url 'covid19_deaths' %}" class="nav-link">Covid_19</a> </li>
                 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+    {% if user.is_authenticated %}
             <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">
                 Hi, {{ user.get_username }} !&nbsp; LOGOUT</a> </li>
     {% else %}
         <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">LOGIN</a> </li>
+
         <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">SIGNUP</a> </li>
-            </ul>
     {% endif %}
+            </ul>
         </div>
         </nav>
 </div>
